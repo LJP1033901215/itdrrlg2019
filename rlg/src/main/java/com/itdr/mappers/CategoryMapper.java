@@ -20,5 +20,4 @@ public interface CategoryMapper {
     int updateByPrimaryKey(Category record);
 
     List<Category> selectByParentId(@Param("pid") Integer pid);
-
 }

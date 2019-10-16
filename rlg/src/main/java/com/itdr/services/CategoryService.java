@@ -6,4 +6,6 @@ import com.itdr.common.ServerResponse;
 public interface CategoryService {
     //根据分类ID查询所有子类（包括本身）
     ServerResponse getDeepCategory(Integer categoryId);
+    //查询平级ID子类
+    ServerResponse getCategory(Integer categoryId);
 }

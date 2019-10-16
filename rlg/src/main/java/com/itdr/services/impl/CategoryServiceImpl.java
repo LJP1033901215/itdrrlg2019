@@ -48,6 +48,19 @@ public class CategoryServiceImpl implements CategoryService {
         ServerResponse rs = ServerResponse.successRs(pi);
         return rs;
     }
+
+
+    //查询平级ID子类
+    @Override
+    public ServerResponse getCategory(Integer categoryId) {
+        if (categoryId==null){
+            return ServerResponse.defeatedRs("参数不可为空");
+        }
+        List<Product> product = productMapper.selectByListCategoryId(categoryId);
+
+        return ServerResponse.successRs(product);
+    }
+
     //创建递归的方法
     private void getAll(Integer pid, List<Integer> list){
         //创建出集合接收根据ID查询出来的数据

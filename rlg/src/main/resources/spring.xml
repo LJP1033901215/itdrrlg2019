@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+<!--开启扫描-->
+    <context:component-scan base-package="com.itdr">
+        <!--排斥扫描Contoller类-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!--引入配置文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--配置连接-->
+    <bean id="dataSource1" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+<!--设置配置SqlSessionFactory创建工厂的类-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--引入连接池-->
+        <property name="dataSource" ref="dataSource1"/>
+        <!--引入mybatis.xml主文件-->
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+        <!--分页插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties" value="musql"/>
+                </bean>
+            </array>
+        </property>
+    </bean>
+    <!--使用扫描包的形式加载mybatis的映射SQL文件-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.itdr.mappers"/>
+        <!--每个mapper代理对象就是类名，首字母小写-->
+    </bean>
+
+</beans>

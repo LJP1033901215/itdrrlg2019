@@ -39,7 +39,7 @@ public class Product {
     }
 
     public void setSubImages(String subImages) {
-        this.subImages = subImages == null ? null : subImages.trim();
+        this.subImages = subImages ;
     }
 
     public String getDetail() {
@@ -47,7 +47,7 @@ public class Product {
     }
 
     public void setDetail(String detail) {
-        this.detail = detail == null ? null : detail.trim();
+        this.detail = detail ;
     }
 
     public Integer getId() {
@@ -71,7 +71,7 @@ public class Product {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public String getSubtitle() {
@@ -79,7 +79,7 @@ public class Product {
     }
 
     public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle == null ? null : subtitle.trim();
+        this.subtitle = subtitle ;
     }
 
     public String getMainImage() {
@@ -87,7 +87,7 @@ public class Product {
     }
 
     public void setMainImage(String mainImage) {
-        this.mainImage = mainImage == null ? null : mainImage.trim();
+        this.mainImage = mainImage ;
     }
 
     public BigDecimal getPrice() {

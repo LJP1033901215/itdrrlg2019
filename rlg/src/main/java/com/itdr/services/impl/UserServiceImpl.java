@@ -9,12 +9,15 @@ import com.itdr.services.UserService;
 import com.itdr.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 //用户业务层
 @Service("userService")
+//添加事务注解
+@Transactional
 public class UserServiceImpl implements UserService {
 
 
@@ -153,7 +156,7 @@ public class UserServiceImpl implements UserService {
         }
         return ServerResponse.successRs("更新成功");
     }
-    //忘记密码
+    //非登录状态下忘记密码，输入用户名，返回密保问题=========================================
     @Override
     public ServerResponse<Users> forgetGetQuestion(String username) {
         if (username==null || username.equals("")){
@@ -163,6 +166,7 @@ public class UserServiceImpl implements UserService {
         if (i<=0){
             return ServerResponse.defeatedRs("用户名不存在");
         }
+        //返回密保问题。
         String question = usersMapper.selectByUserNname(username);
         if (question==null || "".equals(question)){
             return  ServerResponse.defeatedRs("用户未设置密保问题");
@@ -170,7 +174,7 @@ public class UserServiceImpl implements UserService {
         ServerResponse sr = ServerResponse.successRs(question);
         return sr;
     }
-    //提交密保问题答案
+    //非登录状态下，提交密保问题答案=====================================================================
     @Override
     public ServerResponse<Users> forgetCheckAnswer(String username, String question, String answer) {
         //参数为空
@@ -202,7 +206,7 @@ public class UserServiceImpl implements UserService {
         //返回令牌
         return ServerResponse.successRs(token);
     }
-    //忘记密码重设密码==============================================================================
+    //非登录状态下忘记密码重设密码==============================================================================
     @Override
     public ServerResponse<Users> forgetResetPassword(String username, String passwordNew, String forgetToken) {
         //参数为空

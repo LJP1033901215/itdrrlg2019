@@ -24,7 +24,7 @@ public class CategoryManageController {
     //根据分类ID查询平级分类
     @RequestMapping("get_category.do")
     public ServerResponse getCategory(Integer categoryId){
-        ServerResponse sr = categoryService.getDeepCategory(categoryId);
+        ServerResponse sr = categoryService.getCategory(categoryId);
         return sr;
     }
 
